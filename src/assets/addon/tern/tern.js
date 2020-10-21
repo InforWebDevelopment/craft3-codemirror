@@ -683,7 +683,9 @@
           send({type: "getFile", err: String(err), text: text, id: data.id});
         });
       } else if (data.type == "debug") {
-        window.console.log(data.message);
+        // Fix security issue according to VeraCode: CWE-117: Improper Output Neutralization for Logs
+        // MIWD-658, 21-October-2020 @ Paul Vaessen
+        //window.console.log(data.message);
       } else if (data.id && pending[data.id]) {
         pending[data.id](data.err, data.body);
         delete pending[data.id];
